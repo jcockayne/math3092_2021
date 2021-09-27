@@ -1,0 +1,1 @@
+This repository contains the `RMarkdown` source for the lecture material from Math3092 as of 2021.
