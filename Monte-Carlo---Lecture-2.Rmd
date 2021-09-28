@@ -1,0 +1,254 @@
+---
+title: "Monte Carlo - Part 2"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Recap {.build}
+
+We are interested in *computing integrals* or *expectations* of a random
+variable $X$, with density $f(x)$, on $\mathbb{R}$.
+Let $h(x)$ denote a function whose expectation we would like to compute, i.e.
+$$
+  E_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
+$$
+
+For $x_1, \dots, x_n$ drawn i.i.d. from $X$, the *Monte-Carlo estimator* is
+$$
+   \bar{h}_n := \frac{1}{n} \sum_{j=1}^n h(x_j) .
+$$
+
+## This Lecture {.build}
+
+1. Does the Monte-Carlo Estimator converge?
+2. How can we measure the error?
+
+Where to find these slides: [github.com/jcockayne/math3092_2021](https://github.com/jcockayne/math3092_2021).
+
+Further reading: see ["Introducing Monte Carlo Methods with R"](https://www.springer.com/gp/book/9781441915757) 
+(digital copy available from the library).
+
+
+# Convergence of Monte Carlo Methods
+
+## Convergence {.build}
+
+It's important to prove that the Monte-Carlo estimator *converges* before we 
+use these methods for real problems.
+
+To do this we will usually be studying the properties of $\bar{h}_n$ as as **random variable**
+i.e. 
+$$
+\bar{h}_n = \frac{1}{n}\sum_{j=1}^n h(X_j) .
+$$
+
+We will use some standard results that you will have seen before in (TODO: A COURSE)
+
+## Almost-Sure Convergence
+
+We say that a sequence of real-valued random variables $(Z_n)$ converges *almost-surely*
+to a constant $\mu \in \mathbb{R}$ if for all $\epsilon > 0$ we have
+$$
+  \lim_{n\to\infty}\mathbb{P}( | Z_n - \mu | > \epsilon) = 0 .
+$$
+
+## Strong Law of Large Numbers (SLLN)
+
+Given i.i.d. real-valued random variables $Z_1, \dots, Z_n$ with expected values 
+$$
+  \mathbb{E}(Z_1) = \mathbb{E}(Z_2) = \dots = \mathbb{E}(Z_n) = \mu
+$$
+the *sample average*
+$$
+  \bar{Z}_n = \frac{1}{n} \sum_{j=1}^n Z_j
+$$
+converges almost-surely to $\mu$ as $n\to\infty$.
+
+
+## Convergence of the Monte-Carlo Estimator
+
+
+::: {.theorem}
+  **Theorem.** 
+  It holds that $\bar{h}_n \to \mathbb{E}_f[h(X)]$, almost-surely, as $n\to\infty$.
+:::
+
+*Proof.*
+
+- Apply **SLLN** with $Z_j = h(X_j)$ and $\mu = \mathbb{E}_f[h(X)]$.
+- Clearly $\mathbb{E}_f[h(X_j)] = \mathbb{E}_f[h(X)]$ for all $j$, so the 
+constant mean assumption is satisfied.
+- **SLLN** therefore gives us the result directly.
+<div style="text-align: right">
+$\blacksquare$
+</div>
+
+# Asymptotic Distribution and Standard Error
+
+## Standard Error {.build}
+
+Having shown that the Monte-Carlo estimator converges to what we expect, 
+it is natural to ask about its error.
+This is often examined by studying the **variance** $\textrm{Var}(\bar{h}_n)$, 
+also known as the **standard error**.
+
+The standard error plays an important role in checking whether Monte-Carlo methods
+have converged, in practise.
+
+
+## Computing the Standard Error {.build}
+
+$$\begin{aligned}
+  v_n:=\textrm{Var}(\bar{h}_m) &= \textrm{Var}\left(
+    \frac{1}{m} \sum_{j=1}^m h(X_j)
+  \right) \\
+  &= \frac{1}{m^2} \sum_{j=1}^m \textrm{Var}(h(X_j))\\
+  &= \frac{1}{m} \textrm{Var}(h(X))
+\end{aligned}$$
+
+We can estimate $\textrm{Var}(h(X))$ using the Monte-Carlo samples we've already produced, 
+giving
+$$
+  v_n = \frac{1}{n}\times
+  \frac{1}{n} \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2.
+$$
+
+
+## Convergence in Distribution {.build}
+
+The standard error plays an important role in the **asymptotic distribution**
+of Monte-Carlo methods, which theoretically justifies its use as a measure
+of error.
+
+We say that a sequence of real-valued random variables $(X_n)$ converges *in distribution*
+to a random variable $X$ if, when $F_n$ denotes the CDF of $X_n$ and $F$ the CDF
+of $X$, it holds that
+$$
+  \lim_{n \to \infty} F_n(x) = F(x) 
+$$
+for all $x \in \mathbb{R}$. 
+
+In this case we write $X_n \stackrel{d}{\to} X$.
+
+## (Lyapunov) Central Limit  (CLT) {.build}
+
+Given i.i.d. real-valued random variables $Z_1, \dots, Z_n$ with means and variances
+$$
+  \mathbb{E}(Z_j) = \mu_j \qquad
+  \textrm{Var}(Z_j) = \sigma_j^2 ,
+$$
+let $s_n = \sum_{j=1}^n \sigma_j^2$.
+Further suppose that for some $\delta > 0$ the RVs satisfy *Lyapunov's condition*:
+$$
+  \lim_{n \to \infty} \frac{1}{s_n^{2 + \delta}} \sum_{j=1}^n \mathbb{E}\left[
+    | Z_j - \mu_j |^{2 + \delta}
+  \right] = 0
+$$
+
+The Lyapunov CLT gives us that:
+$$
+  \frac{1}{\sqrt{s_n}} \sum_{j=1}^n(Z_j - \mu_j) \stackrel{d}{\to} \mathcal{N}(0, 1).
+$$.
+
+
+## Asymptotic Distribution of the Estimator
+
+::: {.theorem}
+  **Theorem.** 
+  Suppose that $\textrm{Var}(\bar{h}_n) < \infty$ for all $n$,
+  and that the sequence $\bar{h}_n$ satisfies the Lyapunov condition for some
+  $\delta > 0$.
+  
+  Then we have that
+  $$
+    \frac{\bar{h}_n - \mathbb{E}_f[h(X)]}{\sqrt{v}_n} \stackrel{d}{\to} \mathcal{N}(0, 1)
+  $$
+  as $n \to \infty$.
+:::
+
+## Asymptotic Distribution of the Estimator
+
+*Proof.* Apply the Lyapunov CLT with $Z_j = h(X_j)$, giving
+$$
+  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{s_n}}  \stackrel{d}{\to} \mathcal{N}(0, 1).
+$$
+where $s_n = \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2 = n^2 v_n$.
+Multiplying the top and bottom on the left-hand-side by $\frac{1}{n}$ gives
+$$
+  \frac{\frac{1}{n}\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{\frac{1}{n^2} s_n}} = 
+  \frac{\bar{h}_n - \mathbb{E}_f[h(X)])}{\sqrt{v_n}} \stackrel{d}{\to} \mathcal{N}(0, 1)
+$$
+as required.
+<div style="text-align: right">
+$\blacksquare$
+</div>
+
+## $\frac{1}{\sqrt{n}}$ Convergence
+
+People often say that Monte-Carlo methods have $\frac{1}{\sqrt{n}}$ convergence.
+
+$$
+  \frac{\bar{h}_n - \mathbb{E}_f[h(X)])}{\sqrt{v_n}} \stackrel{d}{\to} \mathcal{N}(0,1) .
+$$
+Informally, for $n$ sufficiently large $\bar{h}_n - \mathbb{E}_f[h(X)]$ is distributed like
+$\mathcal{N}(0, v_n)$.
+
+Note that $v_n \approx \frac{1}{n} \textrm{Var}(h(X))$,
+so that the standard deviation is tending to zero at a rate of $\frac{1}{\sqrt{n}}$.
+
+# Simulations
+
+## Normal RV with Standard Error (1)
+
+```{r sampling, echo=TRUE}
+  set.seed(123)
+  n = 1000
+  t = 0
+  h <- function(x) {
+    x < t
+  }
+  x_sample = rnorm(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/n * sum(h_sample)
+  v_n = (1/n^2)*sum((h_sample - h_bar_n)^2)
+  h_bar_n
+  sqrt(v_n)
+```
+
+## Normal RV with Standard Error (2)
+
+```{r sampling_graph}
+  library(ggplot2)
+  set.seed(123)
+  n = 1000
+  t = 0
+  h <- function(x) {
+    x < t
+  }
+  x_sample = rnorm(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample)
+  std_err = 1/1:n*sqrt(cumsum((h_sample - h_bar_n)^2))
+  
+  df = data.frame(n=1:n, h_bar_n=h_bar_n, lb=h_bar_n-3*std_err, ub=h_bar_n+3*std_err)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_ribbon(data=df, aes(ymin=lb, ymax=ub), fill='red', alpha=0.4) +
+    geom_hline(yintercept=0.5, linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```
+
+## Caution!
+
+The result we proved that justifies the use of standard error is *asymptotic*.
+It only holds when $n$ is very large, so we shouldn't treat these as proper 
+"confidence intervals".
+
+Nevertheless, the standard error provides a useful heuristic to assess convergence.

@@ -1,0 +1,6 @@
+.theorem {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid black;
+  background-color: rgba(0,0,0,0.1);
+}

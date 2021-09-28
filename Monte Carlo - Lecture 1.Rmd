@@ -1,0 +1,159 @@
+---
+title: "Monte Carlo - Part 1"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    incremental: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## This Lecture {.build}
+1. What is Monte-Carlo?
+2. Simple simulations.
+
+Where to find these slides: [github.com/jcockayne/math3092_2021](https://github.com/jcockayne/math3092_2021).
+
+Further reading: see ["Introducing Monte Carlo Methods with R"](https://www.springer.com/gp/book/9781441915757) 
+(digital copy available from the library).
+
+# What is Monte-Carlo?
+
+## What Is Monte-Carlo? {.build}
+
+Consider a random variable $X$ with PDF $\color{blue}{f(x)}$.
+For simplicity, we assume $x \in \mathbb{R}$ (but Monte-Carlo can be applied
+*much* more generally).
+Let $\color{green}{h(x)}$ denote a function, $\color{green}{h(x)} : \mathbb{R} \to \mathbb{R}$.
+
+
+Monte Carlo is a tool for estimating *integrals*:
+$$E_f[h(X)] := \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x.$$
+
+
+## Examples {.build}
+
+$$
+E_f[h(X)] = \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x
+$$
+
+Important examples of $h(x)$:
+
+* Computing the mean: $h(x) = x$
+* Higher order moments: $h(x) = x^2, x^3, \dots$
+* Computing probabilities $P(a \leq X \leq b)$:
+$$
+h(x) = \mathbb{I}(a, b) = \begin{cases}
+  1 & a \leq x \leq b \\
+  0 & \text{else}
+\end{cases}
+$$
+
+
+## Other Options {.build}
+
+Other options for computing $\int h(x) f(x) \; \textrm{d}x$ exist, e.g.
+you could just apply a *quadrature rule* (such as the trapezium rule) 
+to $h(x) f(x)$.
+
+Downsides:
+
+1. Tricky to handle infinite domains.
+2. Don't necessarily target where the probability mass is concentrated.
+3. Don't work well in very high dimensions.
+
+Monte-Carlo is a *generic* way of handling these integrals, provided we can
+sample from $X$.
+
+## Monte-Carlo Estimator {.build}
+
+Let $x_1, \dots, x_n$ be independent and identitically distributed (i.i.d.) draws
+from $X$.
+
+The Monte-Carlo estimator of $E_f[h(X)]$ is given by
+$$
+  \bar{h}_n = \frac{1}{n}\sum_{j=1}^n h(x_j) .
+$$
+We will talk about problems like *convergence* in the next lecture.
+For now, let's look at the *practical properties* of $\bar{h}_n$.
+
+## Estimating Probabilities of Normal Distributions
+
+Consider calculating $\mathbb{P}(X < t)$ with Monte-Carlo, where $X \sim \mathcal{N}(0,1)$.
+We can do this by Monte-Carlo, with $f(x) = \mathcal{N}(x; 0, 1)$ and $h(x) = \mathbb{I}(-\infty, t)$.
+Obviously, as we know, $\mathbb{P}(X < t)$ is easy to compute with the `R` function `qnorm`.
+
+```{r sampling, echo=TRUE}
+  set.seed(123)
+  n = 1000
+  t = 0
+  h <- function(x) {
+    x < t
+  }
+  x_sample = rnorm(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/n * sum(h_sample)
+  h_bar_n
+```
+
+## Intuition
+
+```{r intuition_graph}
+  library(ggplot2)
+  xs = seq(from=-4, to=4, by=0.1)
+  ys = dnorm(xs)
+  samples = rnorm(100)
+  good_or_bad = rep("blue", each=length(samples))
+  good_or_bad[samples > t] = "black"
+  h = rep(0, each=length(xs))
+  h[xs < 0] = max(ys)
+  df = data.frame(x=xs, pdf=ys, h=h)
+  df_samples = data.frame(x = samples, good_or_bad = good_or_bad)
+  ggplot() +
+    geom_line(data=df, aes(x=x, y=pdf), color="green") +
+    geom_line(data=df, aes(x=x, y=h), color="blue") +
+    ylab(expression(f(x))) +
+    geom_point(data=df_samples, aes(x=x, y=0.01), shape=4, color=good_or_bad)
+  
+```
+
+
+## Estimating Probabilities of Normal Distributions
+
+```{r sampling_many_n, echo=TRUE}
+  set.seed(123)
+  ns = c(10, 100, 1000, 10000, 100000)
+  t = 0
+  h <- function(x) {
+    x < t
+  }
+  for(n in ns) {
+    x_sample = rnorm(n)
+    h_sample = h(x_sample)
+    h_bar_n = 1/n * sum(h_sample)
+    cat(sprintf("n = %d\th_bar_n = %f\n", n, h_bar_n))
+  }
+```
+
+
+## Estimating Probabilities of Normal Distributions
+
+```{r sampling_graph}
+  library(ggplot2)
+  set.seed(123)
+  n = 1000
+  t = 0
+  h <- function(x) {
+    x < t
+  }
+  x_sample = rnorm(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample)
+  df = data.frame(n=1:n, h_bar_n=h_bar_n)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_hline(yintercept=0.5, linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```
+
