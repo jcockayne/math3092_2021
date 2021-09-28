@@ -29,13 +29,13 @@ Let $\color{green}{h(x)}$ denote a function, $\color{green}{h(x)} : \mathbb{R} \
 
 
 Monte Carlo is a tool for estimating *integrals*:
-$$E_f[h(X)] := \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x.$$
+$$\mathbb{E}_f[h(X)] := \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x.$$
 
 
 ## Examples {.build}
 
 $$
-E_f[h(X)] = \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x
+\mathbb{E}_f[h(X)] = \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x
 $$
 
 Important examples of $h(x)$:
@@ -71,7 +71,7 @@ sample from $X$.
 Let $x_1, \dots, x_n$ be independent and identitically distributed (i.i.d.) draws
 from $X$.
 
-The Monte-Carlo estimator of $E_f[h(X)]$ is given by
+The Monte-Carlo estimator of $\mathbb{E}_f[h(X)]$ is given by
 $$
   \bar{h}_n = \frac{1}{n}\sum_{j=1}^n h(x_j) .
 $$
@@ -157,3 +157,20 @@ Obviously, as we know, $\mathbb{P}(X < t)$ is easy to compute with the `R` funct
     ylab(expression(bar(h)[n]))
 ```
 
+# Conclusion
+
+## Conclusion {.build}
+
+We've seen...
+
+* What Monte-Carlo is.
+* Some simple simulations.
+
+Independent work:
+
+1. Create a git repository.
+2. Create an R Markdown workbook in the repository.
+3. Implement Monte Carlo yourself.
+  1. For $X \sim \mathcal{N}(0,1)$, try computing $\mathbb{P}(X < t)$ for a range of
+  $t$, e.g. $t=0.5, 0.1, 0.01, 0.001$.
+4. Check in your code and push it to github.

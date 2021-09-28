@@ -23,7 +23,7 @@ sections 26-30.
 
 # What is R Markdown, and why should you use it?
 
-## R Markdown
+## R Markdown {.build}
 
 R Markdown is a file format that combines `markdown` with `R` code to produce what
 are called "interactive documents".
@@ -33,10 +33,10 @@ you write to accompany it.
 * The goal is *reproducibility* - to ensure that statistical results you produce
 can be *re*produced by any consumers.
 * Reproducibility is a *big problem* 
-  - In science we are in the midst of an [irreproducibility crisis](https://doi.org/10.1038/533452a)
+  - In science we are in the midst of an [irreproducibility crisis](https://doi.org/10.1038/533452a).
   - In the USA, estimates say that irreproducibility [costs $28 billion annually](https://doi.org/10.1371/journal.pbio.1002626).
 
-## What is Markdown?
+## What is Markdown? {.build}
 
 Markdown is a simple way to create text that can be rendered into another document.
 Simple examples:
@@ -77,7 +77,7 @@ $$exp(i\pi) = -1$$
 
 * An R Markdown document is just a markdown document with some extra features.
 * They are plain text files with extension `.Rmd`.
-* They need to be "knitted" in `RStudio` to generate readable output
+* They need to be "knitted" in `RStudio` to generate readable output.
   - The output can be `.html` or `.pdf`, but there are many other options.
 
 If you have RStudio you already have R Markdown:
@@ -86,7 +86,7 @@ If you have RStudio you already have R Markdown:
 # Including R Code
 
 
-## Code Chunks in R Markdown Documents
+## Code Chunks in R Markdown Documents {.build}
 
 R Markdown makes mixing `R` code with your markdown easy:
 
@@ -109,7 +109,7 @@ R Markdown makes mixing `R` code with your markdown easy:
   ```
 </div>
 
-## Code Chunk Options
+## Code Chunk Options {.build}
 
 Code chunks can have options, e.g. `{r eval=TRUE}` which modify their behaviour:
 
@@ -120,7 +120,7 @@ chunk from the scope in the rest of the document.
 
 Descriptions of more at [https://yihui.org/knitr/options/](https://yihui.org/knitr/options/).
 
-## Using R in R Markdown Documents
+## Using R in R Markdown Documents {.build}
 
 You can also evaluate `R` code inline in text.
 For example, you can display the value of `x` (defined on the previous slide) 
@@ -129,7 +129,7 @@ by typing:
 x` ``
 which yields `` `r x` ``.
 
-## Plotting
+## Plotting 
 
 If a code chunk outputs a graph, it is automatically rendered to the document:
 
@@ -142,7 +142,7 @@ If a code chunk outputs a graph, it is automatically rendered to the document:
     geom_line()
 ```
 
-## Generating output
+## Generating output {.build}
 
 To generate the output `.html` or `.pdf` file, just click 
 ![the knit button](img/knit.png)

@@ -17,7 +17,7 @@ We are interested in *computing integrals* or *expectations* of a random
 variable $X$, with density $f(x)$, on $\mathbb{R}$.
 Let $h(x)$ denote a function whose expectation we would like to compute, i.e.
 $$
-  E_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
+  \mathbb{E}_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
 $$
 
 For $x_1, \dots, x_n$ drawn i.i.d. from $X$, the *Monte-Carlo estimator* is
@@ -252,3 +252,19 @@ It only holds when $n$ is very large, so we shouldn't treat these as proper
 "confidence intervals".
 
 Nevertheless, the standard error provides a useful heuristic to assess convergence.
+
+
+# Conclusion
+
+## Conclusion {.build}
+
+We've seen...
+
+* That Monte-Carlo converges.
+* How to assess error with the standard error.
+
+Independent work:
+
+1. Read Section 3.3 of "Introducing Monte Carlo Methods with R"
+2. Attempt Exercise 3.5.
+3. (And push it to github...!)

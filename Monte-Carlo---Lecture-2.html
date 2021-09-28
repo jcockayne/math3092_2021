@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Monte Carlo - Lecture 2</title>
+  <title>Monte Carlo - Part 2</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -19,7 +19,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Monte Carlo - Lecture 2',
+                title: 'Monte Carlo - Part 2',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -170,7 +170,7 @@ slide:not(.current) .plotly.html-widget{
 <slide class=""><hgroup><h2>Recap</h2></hgroup><article  class="build" id="recap">
 
 <p>We are interested in <em>computing integrals</em> or <em>expectations</em> of a random variable \(X\), with density \(f(x)\), on \(\mathbb{R}\). Let \(h(x)\) denote a function whose expectation we would like to compute, i.e. \[
-  E_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
+  \mathbb{E}_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
 \]</p>
 
 <p>For \(x_1, \dots, x_n\) drawn i.i.d. from \(X\), the <em>Monte-Carlo estimator</em> is \[
@@ -339,7 +339,26 @@ slide:not(.current) .plotly.html-widget{
 
 <p>The result we proved that justifies the use of standard error is <em>asymptotic</em>. It only holds when \(n\) is very large, so we shouldn’t treat these as proper &ldquo;confidence intervals&rdquo;.</p>
 
-<p>Nevertheless, the standard error provides a useful heuristic to assess convergence.</p></article></slide>
+<p>Nevertheless, the standard error provides a useful heuristic to assess convergence.</p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Conclusion</h2></hgroup><article  id="conclusion">
+
+</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  class="build" id="conclusion-1">
+
+<p>We’ve seen…</p>
+
+<ul class = 'build'>
+<li>That Monte-Carlo converges</li>
+<li>How to assess error with the standard error.</li>
+</ul>
+
+<p>Independent work:</p>
+
+<ol class = 'build'>
+<li>Read Section 3.3 of &ldquo;Introducing Monte Carlo Methods with R&rdquo;</li>
+<li>Attempt Exercise 3.5.</li>
+<li>(And push it to github…!)</li>
+</ol></article></slide>
 
 
   <slide class="backdrop"></slide>

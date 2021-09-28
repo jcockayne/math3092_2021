@@ -29,7 +29,7 @@ Further reading: [happygitwithr.com](https://happygitwithr.com).
 Git is software for *version control*.
 It helps you to keep track of how files have changed over time.
 
-## Why should I use Git?
+## Why should I use Git? {.build}
 
 * Version control **is worth the price of admission**.
   - If you write software, you *will* sometimes break it while making changes.
@@ -40,8 +40,10 @@ It helps you to keep track of how files have changed over time.
 * Development - any future job that involves writing software will be using version control.
 * Exposure - code on github can be seen and re-used by anyone. A strong git presence
   can be good for your CV!
+  
+Git is *not just for code* but it works best with *text files* (e.g. LaTeX files).
 
-## What's the catch?
+## What's the catch? {.build}
 
 Git is a complex piece of software that can be difficult to get used to, and
 when it goes wrong it can be difficult to fix.
@@ -86,5 +88,21 @@ solo on a project.
 You can clone a project from `File > New Project > Version Control > Git`
 
 ![Click the "git" tab in the upper-right pane](img/git.png).
+
+# Conclusion 
+
+## Conclusion {.build}
+
+We've seen:
+
+* Why you should be using git.
+* The simple git workflow.
+
+Getting help:
+
+Git is one of the most widely used pieces of software on earth --- googling 
+often yields results. Also:
+
+* [Happy Git with R](https://happygitwithr.com/rstudio-git-github.html)
 
 
