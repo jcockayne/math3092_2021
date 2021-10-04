@@ -166,7 +166,7 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  id="this-lecture" class="build">
+<slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  class="build" id="this-lecture">
 
 <ol class = 'build'>
 <li>What is Monte-Carlo?</li>
@@ -179,13 +179,13 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>What is Monte-Carlo?</h2></hgroup><article  id="what-is-monte-carlo">
 
-</article></slide><slide class=""><hgroup><h2>What Is Monte-Carlo?</h2></hgroup><article  id="what-is-monte-carlo-1" class="build">
+</article></slide><slide class=""><hgroup><h2>What Is Monte-Carlo?</h2></hgroup><article  class="build" id="what-is-monte-carlo-1">
 
 <p>Consider a random variable \(X\) with PDF \(\color{blue}{f(x)}\). For simplicity, we assume \(x \in \mathbb{R}\) (but Monte-Carlo can be applied <em>much</em> more generally). Let \(\color{green}{h(x)}\) denote a function, \(\color{green}{h(x)} : \mathbb{R} \to \mathbb{R}\).</p>
 
 <p>Monte Carlo is a tool for estimating <em>integrals</em>: \[\mathbb{E}_f[h(X)] := \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x.\]</p>
 
-</article></slide><slide class=""><hgroup><h2>Examples</h2></hgroup><article  id="examples" class="build">
+</article></slide><slide class=""><hgroup><h2>Examples</h2></hgroup><article  class="build" id="examples">
 
 <p>\[
 \mathbb{E}_f[h(X)] = \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x
@@ -204,7 +204,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 \]</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Other Options</h2></hgroup><article  id="other-options" class="build">
+</article></slide><slide class=""><hgroup><h2>Other Options</h2></hgroup><article  class="build" id="other-options">
 
 <p>Other options for computing \(\int h(x) f(x) \; \textrm{d}x\) exist, e.g. you could just apply a <em>quadrature rule</em> (such as the trapezium rule) to \(h(x) f(x)\).</p>
 
@@ -218,7 +218,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 
 <p>Monte-Carlo is a <em>generic</em> way of handling these integrals, provided we can sample from \(X\).</p>
 
-</article></slide><slide class=""><hgroup><h2>Monte-Carlo Estimator</h2></hgroup><article  id="monte-carlo-estimator" class="build">
+</article></slide><slide class=""><hgroup><h2>Monte-Carlo Estimator</h2></hgroup><article  class="build" id="monte-carlo-estimator">
 
 <p>Let \(x_1, \dots, x_n\) be independent and identitically distributed (i.i.d.) draws from \(X\).</p>
 
@@ -228,7 +228,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 
 </article></slide><slide class=""><hgroup><h2>Estimating Probabilities of Normal Distributions</h2></hgroup><article  id="estimating-probabilities-of-normal-distributions">
 
-<p>Consider calculating \(\mathbb{P}(X &lt; t)\) with Monte-Carlo, where \(X \sim \mathcal{N}(0,1)\). We can do this by Monte-Carlo, with \(f(x) = \mathcal{N}(x; 0, 1)\) and \(h(x) = \mathbb{I}(-\infty, t)\). Obviously, as we know, \(\mathbb{P}(X &lt; t)\) is easy to compute with the <code>R</code> function <code>qnorm</code>.</p>
+<p>Consider calculating \(\mathbb{P}(X &lt; t)\) with Monte-Carlo, where \(X \sim \mathcal{N}(0,1)\). We can do this by Monte-Carlo, with \(f(x) = \mathcal{N}(x; 0, 1)\) and \(h(x) = \mathbb{I}(-\infty, t)\). Obviously, as we know, \(\mathbb{P}(X &lt; t)\) is easy to compute with the <code>R</code> function <code>pnorm</code>.</p>
 
 <pre class = 'prettyprint lang-r'>  set.seed(123)
   n = 1000
@@ -274,7 +274,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Conclusion</h2></hgroup><article  id="conclusion">
 
-</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion-1" class="build">
+</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  class="build" id="conclusion-1">
 
 <p>We’ve seen…</p>
 
@@ -283,14 +283,20 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 <li>Some simple simulations.</li>
 </ul>
 
-<p>Independent work:</p>
+</article></slide><slide class=""><hgroup><h2>Independent work:</h2></hgroup><article  id="independent-work">
 
 <ol class = 'build'>
-<li>Create a git repository.</li>
-<li>Create an R Markdown workbook in the repository.</li>
-<li>Implement Monte Carlo yourself.</li>
+<li>(Optional) Create a git repository.</li>
+<li>Create an R Markdown workbook.</li>
+<li>Implement Monte Carlo yourself:
+
+<ol class = 'build'>
 <li>For \(X \sim \mathcal{N}(0,1)\), try computing \(\mathbb{P}(X &lt; t)\) for a range of \(t\), e.g. \(t=0.5, 0.1, 0.01, 0.001\).</li>
-<li>Check in your code and push it to github.</li>
+<li>Compare the results to the values calculated using <code>pnorm</code>, as \(n\) increases.</li>
+<li>Check convergence using similar plots to the ones presented above.</li>
+<li>(Optional) Repeat the above for: \(X \sim \textrm{Cauchy}\left(0, 1\right)\) . How do the results differ? (Hint: you may find the functions <code>rcauchy</code> and <code>pcauchy</code> helpful).</li>
+</ol></li>
+<li>(Optional) Check in your code and push it to github.</li>
 </ol></article></slide>
 
 

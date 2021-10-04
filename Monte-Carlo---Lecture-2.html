@@ -167,7 +167,7 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>Recap</h2></hgroup><article  class="build" id="recap">
+<slide class=""><hgroup><h2>Recap</h2></hgroup><article  id="recap" class="build">
 
 <p>We are interested in <em>computing integrals</em> or <em>expectations</em> of a random variable \(X\), with density \(f(x)\), on \(\mathbb{R}\). Let \(h(x)\) denote a function whose expectation we would like to compute, i.e. \[
   \mathbb{E}_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
@@ -177,7 +177,7 @@ slide:not(.current) .plotly.html-widget{
    \bar{h}_n := \frac{1}{n} \sum_{j=1}^n h(x_j) .
 \]</p>
 
-</article></slide><slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  class="build" id="this-lecture">
+</article></slide><slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  id="this-lecture" class="build">
 
 <ol class = 'build'>
 <li>Does the Monte-Carlo Estimator converge?</li>
@@ -190,7 +190,7 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Convergence of Monte Carlo Methods</h2></hgroup><article  id="convergence-of-monte-carlo-methods">
 
-</article></slide><slide class=""><hgroup><h2>Convergence</h2></hgroup><article  class="build" id="convergence">
+</article></slide><slide class=""><hgroup><h2>Convergence</h2></hgroup><article  id="convergence" class="build">
 
 <p>It’s important to prove that the Monte-Carlo estimator <em>converges</em> before we use these methods for real problems.</p>
 
@@ -198,7 +198,7 @@ slide:not(.current) .plotly.html-widget{
 \bar{h}_n = \frac{1}{n}\sum_{j=1}^n h(X_j) .
 \]</p>
 
-<p>We will use some standard results that you will have seen before in (TODO: A COURSE)</p>
+<p>We will use some standard results that you will have seen before in MATH2011.</p>
 
 </article></slide><slide class=""><hgroup><h2>Almost-Sure Convergence</h2></hgroup><article  id="almost-sure-convergence">
 
@@ -232,28 +232,28 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Asymptotic Distribution and Standard Error</h2></hgroup><article  id="asymptotic-distribution-and-standard-error">
 
-</article></slide><slide class=""><hgroup><h2>Standard Error</h2></hgroup><article  class="build" id="standard-error">
+</article></slide><slide class=""><hgroup><h2>Standard Error</h2></hgroup><article  id="standard-error" class="build">
 
 <p>Having shown that the Monte-Carlo estimator converges to what we expect, it is natural to ask about its error. This is often examined by studying the <strong>variance</strong> \(\textrm{Var}(\bar{h}_n)\), also known as the <strong>standard error</strong>.</p>
 
 <p>The standard error plays an important role in checking whether Monte-Carlo methods have converged, in practise.</p>
 
-</article></slide><slide class=""><hgroup><h2>Computing the Standard Error</h2></hgroup><article  class="build" id="computing-the-standard-error">
+</article></slide><slide class=""><hgroup><h2>Computing the Standard Error</h2></hgroup><article  id="computing-the-standard-error" class="build">
 
 <p>\[\begin{aligned}
   v_n:=\textrm{Var}(\bar{h}_m) &amp;= \textrm{Var}\left(
-    \frac{1}{m} \sum_{j=1}^m h(X_j)
+    \frac{1}{n} \sum_{j=1}^n h(X_j)
   \right) \\
-  &amp;= \frac{1}{m^2} \sum_{j=1}^m \textrm{Var}(h(X_j))\\
-  &amp;= \frac{1}{m} \textrm{Var}(h(X))
+  &amp;= \frac{1}{n^2} \sum_{j=1}^n \textrm{Var}(h(X_j))\\
+  &amp;= \frac{1}{n} \textrm{Var}(h(X))
 \end{aligned}\]</p>
 
 <p>We can estimate \(\textrm{Var}(h(X))\) using the Monte-Carlo samples we’ve already produced, giving \[
-  v_n = \frac{1}{n}\times
+  v_n \approx \frac{1}{n}\times
   \frac{1}{n} \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2.
 \]</p>
 
-</article></slide><slide class=""><hgroup><h2>Convergence in Distribution</h2></hgroup><article  class="build" id="convergence-in-distribution">
+</article></slide><slide class=""><hgroup><h2>Convergence in Distribution</h2></hgroup><article  id="convergence-in-distribution" class="build">
 
 <p>The standard error plays an important role in the <strong>asymptotic distribution</strong> of Monte-Carlo methods, which theoretically justifies its use as a measure of error.</p>
 
@@ -263,38 +263,33 @@ slide:not(.current) .plotly.html-widget{
 
 <p>In this case we write \(X_n \stackrel{d}{\to} X\).</p>
 
-</article></slide><slide class=""><hgroup><h2>(Lyapunov) Central Limit (CLT)</h2></hgroup><article  class="build" id="lyapunov-central-limit-clt">
+</article></slide><slide class=""><hgroup><h2>Central Limit Theorem (CLT)</h2></hgroup><article  id="central-limit-theorem-clt" class="build">
 
 <p>Given i.i.d. real-valued random variables \(Z_1, \dots, Z_n\) with means and variances \[
-  \mathbb{E}(Z_j) = \mu_j \qquad
-  \textrm{Var}(Z_j) = \sigma_j^2 ,
-\] let \(s_n = \sum_{j=1}^n \sigma_j^2\). Further suppose that for some \(\delta &gt; 0\) the RVs satisfy <em>Lyapunov’s condition</em>: \[
-  \lim_{n \to \infty} \frac{1}{s_n^{2 + \delta}} \sum_{j=1}^n \mathbb{E}\left[
-    | Z_j - \mu_j |^{2 + \delta}
-  \right] = 0
+  \mathbb{E}(Z_j) = \mu \qquad
+  \textrm{Var}(Z_j) = \sigma^2 .
 \]</p>
 
-<p>The Lyapunov CLT gives us that: \[
-  \frac{1}{\sqrt{s_n}} \sum_{j=1}^n(Z_j - \mu_j) \stackrel{d}{\to} \mathcal{N}(0, 1).
+<p>The CLT gives us that: \[
+  \frac{1}{\sqrt{n}} \sum_{j=1}^n(Z_j - \mu) \stackrel{d}{\to} \mathcal{N}(0, \sigma^2).
 \].</p>
 
 </article></slide><slide class=""><hgroup><h2>Asymptotic Distribution of the Estimator</h2></hgroup><article  id="asymptotic-distribution-of-the-estimator">
 
 <div class="theorem">
-<p><strong>Theorem.</strong> Suppose that \(\textrm{Var}(\bar{h}_n) &lt; \infty\) for all \(n\), and that the sequence \(\bar{h}_n\) satisfies the Lyapunov condition for some \(\delta &gt; 0\).</p>
+<p><strong>Theorem.</strong> Suppose that \(\textrm{Var}(\bar{h}_n) &lt; \infty\) for all \(n\).</p>
 
 <p>Then we have that \[
-    \frac{\bar{h}_n - \mathbb{E}_f[h(X)]}{\sqrt{v}_n} \stackrel{d}{\to} \mathcal{N}(0, 1)
+    \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0, v_n)
   \] as \(n \to \infty\).</p></div>
 
 </article></slide><slide class=""><hgroup><h2>Asymptotic Distribution of the Estimator</h2></hgroup><article  id="asymptotic-distribution-of-the-estimator-1">
 
-<em>Proof.</em> Apply the Lyapunov CLT with \(Z_j = h(X_j)\), giving \[
-  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{s_n}}  \stackrel{d}{\to} \mathcal{N}(0, 1).
-\] where \(s_n = \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2 = n^2 v_n\). Multiplying the top and bottom on the left-hand-side by \(\frac{1}{n}\) gives \[
-  \frac{\frac{1}{n}\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{\frac{1}{n^2} s_n}} = 
-  \frac{\bar{h}_n - \mathbb{E}_f[h(X)])}{\sqrt{v_n}} \stackrel{d}{\to} \mathcal{N}(0, 1)
-\] as required.
+<p><em>Proof.</em> Apply the CLT with \(Z_j = h(X_j)\), giving \[
+  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{n}}  \stackrel{d}{\to} \mathcal{N}(0, \textrm{Var}(h(X))).
+\]</p>
+
+Multiplying through by \(\frac{1}{\sqrt{n}}\) gives the result, since \(v_n = \frac{1}{n} \textrm{Var}(h(X))\).
 
 <div style="text-align: right">
 <p>\(\blacksquare\)</p></div>
@@ -343,12 +338,12 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Conclusion</h2></hgroup><article  id="conclusion">
 
-</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  class="build" id="conclusion-1">
+</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion-1" class="build">
 
 <p>We’ve seen…</p>
 
 <ul class = 'build'>
-<li>That Monte-Carlo converges</li>
+<li>That Monte-Carlo converges.</li>
 <li>How to assess error with the standard error.</li>
 </ul>
 

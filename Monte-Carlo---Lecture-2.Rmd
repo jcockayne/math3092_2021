@@ -49,7 +49,7 @@ $$
 \bar{h}_n = \frac{1}{n}\sum_{j=1}^n h(X_j) .
 $$
 
-We will use some standard results that you will have seen before in (TODO: A COURSE)
+We will use some standard results that you will have seen before in MATH2011.
 
 ## Almost-Sure Convergence
 
@@ -107,16 +107,16 @@ have converged, in practise.
 
 $$\begin{aligned}
   v_n:=\textrm{Var}(\bar{h}_m) &= \textrm{Var}\left(
-    \frac{1}{m} \sum_{j=1}^m h(X_j)
+    \frac{1}{n} \sum_{j=1}^n h(X_j)
   \right) \\
-  &= \frac{1}{m^2} \sum_{j=1}^m \textrm{Var}(h(X_j))\\
-  &= \frac{1}{m} \textrm{Var}(h(X))
+  &= \frac{1}{n^2} \sum_{j=1}^n \textrm{Var}(h(X_j))\\
+  &= \frac{1}{n} \textrm{Var}(h(X))
 \end{aligned}$$
 
 We can estimate $\textrm{Var}(h(X))$ using the Monte-Carlo samples we've already produced, 
 giving
 $$
-  v_n = \frac{1}{n}\times
+  v_n \approx \frac{1}{n}\times
   \frac{1}{n} \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2.
 $$
 
@@ -137,24 +137,18 @@ for all $x \in \mathbb{R}$.
 
 In this case we write $X_n \stackrel{d}{\to} X$.
 
-## (Lyapunov) Central Limit  (CLT) {.build}
+## Central Limit Theorem (CLT) {.build}
 
 Given i.i.d. real-valued random variables $Z_1, \dots, Z_n$ with means and variances
 $$
-  \mathbb{E}(Z_j) = \mu_j \qquad
-  \textrm{Var}(Z_j) = \sigma_j^2 ,
-$$
-let $s_n = \sum_{j=1}^n \sigma_j^2$.
-Further suppose that for some $\delta > 0$ the RVs satisfy *Lyapunov's condition*:
-$$
-  \lim_{n \to \infty} \frac{1}{s_n^{2 + \delta}} \sum_{j=1}^n \mathbb{E}\left[
-    | Z_j - \mu_j |^{2 + \delta}
-  \right] = 0
+  \mathbb{E}(Z_j) = \mu \qquad
+  \textrm{Var}(Z_j) = \sigma^2 .
 $$
 
-The Lyapunov CLT gives us that:
+
+The CLT gives us that:
 $$
-  \frac{1}{\sqrt{s_n}} \sum_{j=1}^n(Z_j - \mu_j) \stackrel{d}{\to} \mathcal{N}(0, 1).
+  \frac{1}{\sqrt{n}} \sum_{j=1}^n(Z_j - \mu) \stackrel{d}{\to} \mathcal{N}(0, \sigma^2).
 $$.
 
 
@@ -162,30 +156,23 @@ $$.
 
 ::: {.theorem}
   **Theorem.** 
-  Suppose that $\textrm{Var}(\bar{h}_n) < \infty$ for all $n$,
-  and that the sequence $\bar{h}_n$ satisfies the Lyapunov condition for some
-  $\delta > 0$.
+  Suppose that $\textrm{Var}(\bar{h}_n) < \infty$ for all $n$.
   
   Then we have that
   $$
-    \frac{\bar{h}_n - \mathbb{E}_f[h(X)]}{\sqrt{v}_n} \stackrel{d}{\to} \mathcal{N}(0, 1)
+    \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0, v_n)
   $$
   as $n \to \infty$.
 :::
 
 ## Asymptotic Distribution of the Estimator
 
-*Proof.* Apply the Lyapunov CLT with $Z_j = h(X_j)$, giving
+*Proof.* Apply the CLT with $Z_j = h(X_j)$, giving
 $$
-  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{s_n}}  \stackrel{d}{\to} \mathcal{N}(0, 1).
+  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{n}}  \stackrel{d}{\to} \mathcal{N}(0, \textrm{Var}(h(X))).
 $$
-where $s_n = \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2 = n^2 v_n$.
-Multiplying the top and bottom on the left-hand-side by $\frac{1}{n}$ gives
-$$
-  \frac{\frac{1}{n}\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{\frac{1}{n^2} s_n}} = 
-  \frac{\bar{h}_n - \mathbb{E}_f[h(X)])}{\sqrt{v_n}} \stackrel{d}{\to} \mathcal{N}(0, 1)
-$$
-as required.
+
+Multiplying through by $\frac{1}{\sqrt{n}}$ gives the result, since $v_n = \frac{1}{n} \textrm{Var}(h(X))$.
 <div style="text-align: right">
 $\blacksquare$
 </div>
@@ -195,13 +182,12 @@ $\blacksquare$
 People often say that Monte-Carlo methods have $\frac{1}{\sqrt{n}}$ convergence.
 
 $$
-  \frac{\bar{h}_n - \mathbb{E}_f[h(X)])}{\sqrt{v_n}} \stackrel{d}{\to} \mathcal{N}(0,1) .
+  \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0,v_n) .
 $$
-Informally, for $n$ sufficiently large $\bar{h}_n - \mathbb{E}_f[h(X)]$ is distributed like
+So, for $n$ sufficiently large $\bar{h}_n - \mathbb{E}_f[h(X)]$ is distributed like
 $\mathcal{N}(0, v_n)$.
 
-Note that $v_n \approx \frac{1}{n} \textrm{Var}(h(X))$,
-so that the standard deviation is tending to zero at a rate of $\frac{1}{\sqrt{n}}$.
+Since $v_n = \frac{1}{n} \textrm{Var}(h(X))$, the standard deviation is tending to zero at a rate of $\frac{1}{\sqrt{n}}$.
 
 # Simulations
 
@@ -267,4 +253,4 @@ Independent work:
 
 1. Read Section 3.3 of "Introducing Monte Carlo Methods with R"
 2. Attempt Exercise 3.5.
-3. (And push it to github...!)
+3. Optional: push it to github!

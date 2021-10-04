@@ -82,7 +82,7 @@ For now, let's look at the *practical properties* of $\bar{h}_n$.
 
 Consider calculating $\mathbb{P}(X < t)$ with Monte-Carlo, where $X \sim \mathcal{N}(0,1)$.
 We can do this by Monte-Carlo, with $f(x) = \mathcal{N}(x; 0, 1)$ and $h(x) = \mathbb{I}(-\infty, t)$.
-Obviously, as we know, $\mathbb{P}(X < t)$ is easy to compute with the `R` function `qnorm`.
+Obviously, as we know, $\mathbb{P}(X < t)$ is easy to compute with the `R` function `pnorm`.
 
 ```{r sampling, echo=TRUE}
   set.seed(123)
@@ -166,11 +166,17 @@ We've seen...
 * What Monte-Carlo is.
 * Some simple simulations.
 
-Independent work:
+## Independent work:
 
-1. Create a git repository.
-2. Create an R Markdown workbook in the repository.
-3. Implement Monte Carlo yourself.
-  1. For $X \sim \mathcal{N}(0,1)$, try computing $\mathbb{P}(X < t)$ for a range of
-  $t$, e.g. $t=0.5, 0.1, 0.01, 0.001$.
-4. Check in your code and push it to github.
+1. (Optional) Create a git repository.
+2. Create an R Markdown workbook.
+3. Implement Monte Carlo yourself:
+    1. For $X \sim \mathcal{N}(0,1)$, try computing $\mathbb{P}(X < t)$ for a range of
+    $t$, e.g. $t=0.5, 0.1, 0.01, 0.001$.
+    2. Compare the results to the values calculated using `pnorm`, as $n$ increases.
+    3. Check convergence using similar plots to the ones presented above.
+    4. (Optional) Repeat the above for:
+    $X \sim \textrm{Cauchy}\left(0, 1\right)$
+    . 
+    How do the results differ? (Hint: you may find the functions `rcauchy` and `pcauchy` helpful).
+4. (Optional) Check in your code and push it to github.
