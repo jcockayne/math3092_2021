@@ -7,12 +7,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r}
-pi = function() {
+what_is_pi = function() {
   3
 }
 ```
 
 ## What is pi?
 
-$$\pi = `r pi()`$$
+$$\pi = `r what_is_pi()`$$
 
