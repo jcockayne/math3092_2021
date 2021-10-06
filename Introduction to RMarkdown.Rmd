@@ -35,6 +35,9 @@ can be *re*produced by any consumers.
 * Reproducibility is a *big problem* 
   - In science we are in the midst of an [irreproducibility crisis](https://doi.org/10.1038/533452a).
   - In the USA, estimates say that irreproducibility [costs $28 billion annually](https://doi.org/10.1371/journal.pbio.1002626).
+  
+R Markdown files are *plain text* files that need to be "knitted" to produce a document
+(e.g. `.pdf` or `.html`).
 
 ## What is Markdown? {.build}
 
@@ -93,8 +96,8 @@ R Markdown makes mixing `R` code with your markdown easy:
 <div style="float: left; width: 50%">
   **For this input:**
   
-  ```{r} `r ''`
-
+  ```{r eval=TRUE}`r ''`
+  
   x = rnorm(1)
   
   x # output is automatically displayed

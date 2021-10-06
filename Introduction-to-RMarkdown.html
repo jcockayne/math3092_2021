@@ -127,10 +127,12 @@ slide:not(.current) .plotly.html-widget{
 <li>Reproducibility is a <em>big problem</em>
 
 <ul class = 'build'>
-<li>In science we are in the midst of an <a href='https://doi.org/10.1038/533452a' title=''>irreproducibility crisis</a></li>
+<li>In science we are in the midst of an <a href='https://doi.org/10.1038/533452a' title=''>irreproducibility crisis</a>.</li>
 <li>In the USA, estimates say that irreproducibility <a href='https://doi.org/10.1371/journal.pbio.1002626' title=''>costs $28 billion annually</a>.</li>
 </ul></li>
 </ul>
+
+<p>R Markdown files are <em>plain text</em> files that need to be &ldquo;knitted&rdquo; to produce a document (e.g. <code>.pdf</code> or <code>.html</code>).</p>
 
 </article></slide><slide class=""><hgroup><h2>What is Markdown?</h2></hgroup><article  class="build" id="what-is-markdown">
 
@@ -174,7 +176,7 @@ $$exp(i\pi) = -1$$</pre></div>
 <ul class = 'build'>
 <li>An R Markdown document is just a markdown document with some extra features.</li>
 <li>They are plain text files with extension <code>.Rmd</code>.</li>
-<li>They need to be &ldquo;knitted&rdquo; in <code>RStudio</code> to generate readable output
+<li>They need to be &ldquo;knitted&rdquo; in <code>RStudio</code> to generate readable output.
 
 <ul class = 'build'>
 <li>The output can be <code>.html</code> or <code>.pdf</code>, but there are many other options.</li>
@@ -192,15 +194,16 @@ $$exp(i\pi) = -1$$</pre></div>
 <div style="float: left; width: 50%">
 <p><strong>For this input:</strong></p>
 
-<pre class = 'prettyprint lang-{r}'>
-x = rnorm(1)
+<p>```{r eval=TRUE}</p>
 
-x # output is automatically displayed</pre></div>
+<p>x = rnorm(1)</p>
+
+<p>x # output is automatically displayed ```</p></div>
 
 <div style="float: right; width: 50%">
 <p><strong>Only this output appears:</strong></p>
 
-<pre >## [1] -0.007664946</pre></div>
+<pre >## [1] -0.3106603</pre></div>
 
 </article></slide><slide class=""><hgroup><h2>Code Chunk Options</h2></hgroup><article  class="build" id="code-chunk-options">
 
@@ -216,7 +219,7 @@ x # output is automatically displayed</pre></div>
 
 </article></slide><slide class=""><hgroup><h2>Using R in R Markdown Documents</h2></hgroup><article  class="build" id="using-r-in-r-markdown-documents">
 
-<p>You can also evaluate <code>R</code> code inline in text. For example, you can display the value of <code>x</code> (defined on the previous slide) by typing: <code>`r x`</code> which yields <code>-0.0076649</code>.</p>
+<p>You can also evaluate <code>R</code> code inline in text. For example, you can display the value of <code>x</code> (defined on the previous slide) by typing: <code>`r x`</code> which yields <code>-0.3106603</code>.</p>
 
 </article></slide><slide class=""><hgroup><h2>Plotting</h2></hgroup><article  id="plotting">
 
