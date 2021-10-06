@@ -1,0 +1,18 @@
+---
+title: "pi"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+pi = function() {
+  3
+}
+```
+
+## What is pi?
+
+$$\pi = `r pi()`$$
+
