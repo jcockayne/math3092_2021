@@ -40,8 +40,7 @@ It helps you to keep track of how files have changed over time.
 * Development - any future job that involves writing software will be using version control.
 * Exposure - code on github can be seen and re-used by anyone. A strong git presence
   can be good for your CV!
-  
-Git is *not just for code* but it works best with *text files* (e.g. LaTeX files).
+* Git is *not just for code* but it works best with *text files* (e.g. LaTeX files).
 
 ## What's the catch? {.build}
 
@@ -83,11 +82,6 @@ There are more advanced "git verbs" - but these should be enough for anyone work
 solo on a project.
 
 
-## Using Git in RStudio
-
-You can clone a project from `File > New Project > Version Control > Git`
-
-![Click the "git" tab in the upper-right pane](img/git.png).
 
 # Conclusion 
 
