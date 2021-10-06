@@ -16,3 +16,12 @@ what_is_pi = function() {
 
 $$\pi = `r what_is_pi()`$$
 
+```{r}
+what_is_phi = function() {
+  0.5*(1 + sqrt(5))
+}
+```
+
+## What is phi?
+
+$$\phi = `r what_is_phi()`$$
