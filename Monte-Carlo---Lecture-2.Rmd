@@ -96,7 +96,7 @@ $\blacksquare$
 
 Having shown that the Monte-Carlo estimator converges to what we expect, 
 it is natural to ask about its error.
-This is often examined by studying the **variance** $\textrm{Var}(\bar{h}_n)$, 
+This is often examined by studying the **standard deviation** $\textrm{Std}(\bar{h}_n)$, 
 also known as the **standard error**.
 
 The standard error plays an important role in checking whether Monte-Carlo methods
@@ -105,18 +105,19 @@ have converged, in practise.
 
 ## Computing the Standard Error {.build}
 
+The standard error $v_n$ is the *standard deviation* of $\bar{h}_n$:
 $$\begin{aligned}
-  v_n:=\textrm{Var}(\bar{h}_m) &= \textrm{Var}\left(
+  v_n^2:=\textrm{Var}(\bar{h}_n) &= \textrm{Var}\left(
     \frac{1}{n} \sum_{j=1}^n h(X_j)
   \right) \\
   &= \frac{1}{n^2} \sum_{j=1}^n \textrm{Var}(h(X_j))\\
   &= \frac{1}{n} \textrm{Var}(h(X))
 \end{aligned}$$
 
-We can estimate $\textrm{Var}(h(X))$ using the Monte-Carlo samples we've already produced, 
+We can estimate $v_n$ using Monte-Carlo, 
 giving
 $$
-  v_n \approx \frac{1}{n}\times
+  v_n^2 \approx \frac{1}{n}\times
   \frac{1}{n} \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2.
 $$
 
@@ -160,7 +161,7 @@ $$.
   
   Then we have that
   $$
-    \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0, v_n)
+    \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0, v_n^2)
   $$
   as $n \to \infty$.
 :::
@@ -169,10 +170,15 @@ $$.
 
 *Proof.* Apply the CLT with $Z_j = h(X_j)$, giving
 $$
-  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{n}}  \stackrel{d}{\to} \mathcal{N}(0, \textrm{Var}(h(X))).
+  \frac{\sum_{j=1}^n(h(X_j) - \mathbb{E}_f[h(X)])}{\sqrt{n}}  \stackrel{d}{\to} \mathcal{N}(0, \textrm{Var}(h(X))).
 $$
 
-Multiplying through by $\frac{1}{\sqrt{n}}$ gives the result, since $v_n = \frac{1}{n} \textrm{Var}(h(X))$.
+Multiplying through by $\frac{1}{\sqrt{n}}$ gives the result:
+$$\begin{aligned}
+  \frac{1}{n}\sum_{j=1}^n h(X_j) - \mathbb{E}_f[h(X)] &\stackrel{d}{\to} \mathcal{N}\left(0, \frac{1}{n}\textrm{Var}(h(X))\right) \\
+  \implies \bar{h}_n - \mathbb{E}_f[h(X)] &\stackrel{d}{\to} \mathcal{N}\left(0, v_n^2\right)
+\end{aligned}$$
+since $v_n^2 = \frac{1}{n} \textrm{Var}(h(X))$.
 <div style="text-align: right">
 $\blacksquare$
 </div>
@@ -182,12 +188,12 @@ $\blacksquare$
 People often say that Monte-Carlo methods have $\frac{1}{\sqrt{n}}$ convergence.
 
 $$
-  \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0,v_n) .
+  \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0,v_n^2) .
 $$
 So, for $n$ sufficiently large $\bar{h}_n - \mathbb{E}_f[h(X)]$ is distributed like
-$\mathcal{N}(0, v_n)$.
+$\mathcal{N}(0, v_n^2)$.
 
-Since $v_n = \frac{1}{n} \textrm{Var}(h(X))$, the standard deviation is tending to zero at a rate of $\frac{1}{\sqrt{n}}$.
+Since $v_n^2 = \frac{1}{n} \textrm{Var}(h(X))$, the standard deviation is tending to zero at a rate of $\frac{1}{\sqrt{n}}$.
 
 # Simulations
 

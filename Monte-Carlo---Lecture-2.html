@@ -167,7 +167,7 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>Recap</h2></hgroup><article  id="recap" class="build">
+<slide class=""><hgroup><h2>Recap</h2></hgroup><article  class="build" id="recap">
 
 <p>We are interested in <em>computing integrals</em> or <em>expectations</em> of a random variable \(X\), with density \(f(x)\), on \(\mathbb{R}\). Let \(h(x)\) denote a function whose expectation we would like to compute, i.e. \[
   \mathbb{E}_f[h(X)] := \int_\mathbb{R} h(x) f(x) \;\textrm{d}x .
@@ -177,7 +177,7 @@ slide:not(.current) .plotly.html-widget{
    \bar{h}_n := \frac{1}{n} \sum_{j=1}^n h(x_j) .
 \]</p>
 
-</article></slide><slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  id="this-lecture" class="build">
+</article></slide><slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  class="build" id="this-lecture">
 
 <ol class = 'build'>
 <li>Does the Monte-Carlo Estimator converge?</li>
@@ -190,7 +190,7 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Convergence of Monte Carlo Methods</h2></hgroup><article  id="convergence-of-monte-carlo-methods">
 
-</article></slide><slide class=""><hgroup><h2>Convergence</h2></hgroup><article  id="convergence" class="build">
+</article></slide><slide class=""><hgroup><h2>Convergence</h2></hgroup><article  class="build" id="convergence">
 
 <p>It’s important to prove that the Monte-Carlo estimator <em>converges</em> before we use these methods for real problems.</p>
 
@@ -232,28 +232,28 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Asymptotic Distribution and Standard Error</h2></hgroup><article  id="asymptotic-distribution-and-standard-error">
 
-</article></slide><slide class=""><hgroup><h2>Standard Error</h2></hgroup><article  id="standard-error" class="build">
+</article></slide><slide class=""><hgroup><h2>Standard Error</h2></hgroup><article  class="build" id="standard-error">
 
-<p>Having shown that the Monte-Carlo estimator converges to what we expect, it is natural to ask about its error. This is often examined by studying the <strong>variance</strong> \(\textrm{Var}(\bar{h}_n)\), also known as the <strong>standard error</strong>.</p>
+<p>Having shown that the Monte-Carlo estimator converges to what we expect, it is natural to ask about its error. This is often examined by studying the <strong>standard deviation</strong> \(\textrm{Std}(\bar{h}_n)\), also known as the <strong>standard error</strong>.</p>
 
 <p>The standard error plays an important role in checking whether Monte-Carlo methods have converged, in practise.</p>
 
-</article></slide><slide class=""><hgroup><h2>Computing the Standard Error</h2></hgroup><article  id="computing-the-standard-error" class="build">
+</article></slide><slide class=""><hgroup><h2>Computing the Standard Error</h2></hgroup><article  class="build" id="computing-the-standard-error">
 
-<p>\[\begin{aligned}
-  v_n:=\textrm{Var}(\bar{h}_m) &amp;= \textrm{Var}\left(
+<p>The standard error \(v_n\) is the <em>standard deviation</em> of \(\bar{h}_n\): \[\begin{aligned}
+  v_n^2:=\textrm{Var}(\bar{h}_n) &amp;= \textrm{Var}\left(
     \frac{1}{n} \sum_{j=1}^n h(X_j)
   \right) \\
   &amp;= \frac{1}{n^2} \sum_{j=1}^n \textrm{Var}(h(X_j))\\
   &amp;= \frac{1}{n} \textrm{Var}(h(X))
 \end{aligned}\]</p>
 
-<p>We can estimate \(\textrm{Var}(h(X))\) using the Monte-Carlo samples we’ve already produced, giving \[
-  v_n \approx \frac{1}{n}\times
+<p>We can estimate \(v_n\) using Monte-Carlo, giving \[
+  v_n^2 \approx \frac{1}{n}\times
   \frac{1}{n} \sum_{j=1}^n [h(x_j) - \bar{h}_n]^2.
 \]</p>
 
-</article></slide><slide class=""><hgroup><h2>Convergence in Distribution</h2></hgroup><article  id="convergence-in-distribution" class="build">
+</article></slide><slide class=""><hgroup><h2>Convergence in Distribution</h2></hgroup><article  class="build" id="convergence-in-distribution">
 
 <p>The standard error plays an important role in the <strong>asymptotic distribution</strong> of Monte-Carlo methods, which theoretically justifies its use as a measure of error.</p>
 
@@ -263,7 +263,7 @@ slide:not(.current) .plotly.html-widget{
 
 <p>In this case we write \(X_n \stackrel{d}{\to} X\).</p>
 
-</article></slide><slide class=""><hgroup><h2>Central Limit Theorem (CLT)</h2></hgroup><article  id="central-limit-theorem-clt" class="build">
+</article></slide><slide class=""><hgroup><h2>Central Limit Theorem (CLT)</h2></hgroup><article  class="build" id="central-limit-theorem-clt">
 
 <p>Given i.i.d. real-valued random variables \(Z_1, \dots, Z_n\) with means and variances \[
   \mathbb{E}(Z_j) = \mu \qquad
@@ -280,16 +280,19 @@ slide:not(.current) .plotly.html-widget{
 <p><strong>Theorem.</strong> Suppose that \(\textrm{Var}(\bar{h}_n) &lt; \infty\) for all \(n\).</p>
 
 <p>Then we have that \[
-    \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0, v_n)
+    \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0, v_n^2)
   \] as \(n \to \infty\).</p></div>
 
 </article></slide><slide class=""><hgroup><h2>Asymptotic Distribution of the Estimator</h2></hgroup><article  id="asymptotic-distribution-of-the-estimator-1">
 
 <p><em>Proof.</em> Apply the CLT with \(Z_j = h(X_j)\), giving \[
-  \frac{\sum_{j=1}^n(h(\bar{X}_j) - \mathbb{E}_f[h(X)])}{\sqrt{n}}  \stackrel{d}{\to} \mathcal{N}(0, \textrm{Var}(h(X))).
+  \frac{\sum_{j=1}^n(h(X_j) - \mathbb{E}_f[h(X)])}{\sqrt{n}}  \stackrel{d}{\to} \mathcal{N}(0, \textrm{Var}(h(X))).
 \]</p>
 
-Multiplying through by \(\frac{1}{\sqrt{n}}\) gives the result, since \(v_n = \frac{1}{n} \textrm{Var}(h(X))\).
+Multiplying through by \(\frac{1}{\sqrt{n}}\) gives the result: \[\begin{aligned}
+  \frac{1}{n}\sum_{j=1}^n h(X_j) - \mathbb{E}_f[h(X)] &amp;\stackrel{d}{\to} \mathcal{N}\left(0, \frac{1}{n}\textrm{Var}(h(X))\right) \\
+  \implies \bar{h}_n - \mathbb{E}_f[h(X)] &amp;\stackrel{d}{\to} \mathcal{N}\left(0, v_n^2\right)
+\end{aligned}\] since \(v_n^2 = \frac{1}{n} \textrm{Var}(h(X))\).
 
 <div style="text-align: right">
 <p>\(\blacksquare\)</p></div>
@@ -299,10 +302,10 @@ Multiplying through by \(\frac{1}{\sqrt{n}}\) gives the result, since \(v_n = \f
 <p>People often say that Monte-Carlo methods have \(\frac{1}{\sqrt{n}}\) convergence.</p>
 
 <p>\[
-  \frac{\bar{h}_n - \mathbb{E}_f[h(X)])}{\sqrt{v_n}} \stackrel{d}{\to} \mathcal{N}(0,1) .
-\] Informally, for \(n\) sufficiently large \(\bar{h}_n - \mathbb{E}_f[h(X)]\) is distributed like \(\mathcal{N}(0, v_n)\).</p>
+  \bar{h}_n - \mathbb{E}_f[h(X)] \stackrel{d}{\to} \mathcal{N}(0,v_n^2) .
+\] So, for \(n\) sufficiently large \(\bar{h}_n - \mathbb{E}_f[h(X)]\) is distributed like \(\mathcal{N}(0, v_n^2)\).</p>
 
-<p>Note that \(v_n \approx \frac{1}{n} \textrm{Var}(h(X))\), so that the standard deviation is tending to zero at a rate of \(\frac{1}{\sqrt{n}}\).</p>
+<p>Since \(v_n^2 = \frac{1}{n} \textrm{Var}(h(X))\), the standard deviation is tending to zero at a rate of \(\frac{1}{\sqrt{n}}\).</p>
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Simulations</h2></hgroup><article  id="simulations">
 
@@ -338,7 +341,7 @@ Multiplying through by \(\frac{1}{\sqrt{n}}\) gives the result, since \(v_n = \f
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Conclusion</h2></hgroup><article  id="conclusion">
 
-</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion-1" class="build">
+</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  class="build" id="conclusion-1">
 
 <p>We’ve seen…</p>
 
@@ -352,7 +355,7 @@ Multiplying through by \(\frac{1}{\sqrt{n}}\) gives the result, since \(v_n = \f
 <ol class = 'build'>
 <li>Read Section 3.3 of &ldquo;Introducing Monte Carlo Methods with R&rdquo;</li>
 <li>Attempt Exercise 3.5.</li>
-<li>(And push it to github…!)</li>
+<li>Optional: push it to github!</li>
 </ol></article></slide>
 
 

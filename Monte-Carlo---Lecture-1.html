@@ -166,7 +166,7 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  class="build" id="this-lecture">
+<slide class=""><hgroup><h2>This Lecture</h2></hgroup><article  id="this-lecture" class="build">
 
 <ol class = 'build'>
 <li>What is Monte-Carlo?</li>
@@ -179,13 +179,13 @@ slide:not(.current) .plotly.html-widget{
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>What is Monte-Carlo?</h2></hgroup><article  id="what-is-monte-carlo">
 
-</article></slide><slide class=""><hgroup><h2>What Is Monte-Carlo?</h2></hgroup><article  class="build" id="what-is-monte-carlo-1">
+</article></slide><slide class=""><hgroup><h2>What Is Monte-Carlo?</h2></hgroup><article  id="what-is-monte-carlo-1" class="build">
 
 <p>Consider a random variable \(X\) with PDF \(\color{blue}{f(x)}\). For simplicity, we assume \(x \in \mathbb{R}\) (but Monte-Carlo can be applied <em>much</em> more generally). Let \(\color{green}{h(x)}\) denote a function, \(\color{green}{h(x)} : \mathbb{R} \to \mathbb{R}\).</p>
 
 <p>Monte Carlo is a tool for estimating <em>integrals</em>: \[\mathbb{E}_f[h(X)] := \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x.\]</p>
 
-</article></slide><slide class=""><hgroup><h2>Examples</h2></hgroup><article  class="build" id="examples">
+</article></slide><slide class=""><hgroup><h2>Examples</h2></hgroup><article  id="examples" class="build">
 
 <p>\[
 \mathbb{E}_f[h(X)] = \int_\mathbb{R} \color{green}{h(x)} \color{blue}{f(x)} \; \textrm{d} x
@@ -204,7 +204,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 \]</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Other Options</h2></hgroup><article  class="build" id="other-options">
+</article></slide><slide class=""><hgroup><h2>Other Options</h2></hgroup><article  id="other-options" class="build">
 
 <p>Other options for computing \(\int h(x) f(x) \; \textrm{d}x\) exist, e.g. you could just apply a <em>quadrature rule</em> (such as the trapezium rule) to \(h(x) f(x)\).</p>
 
@@ -218,7 +218,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 
 <p>Monte-Carlo is a <em>generic</em> way of handling these integrals, provided we can sample from \(X\).</p>
 
-</article></slide><slide class=""><hgroup><h2>Monte-Carlo Estimator</h2></hgroup><article  class="build" id="monte-carlo-estimator">
+</article></slide><slide class=""><hgroup><h2>Monte-Carlo Estimator</h2></hgroup><article  id="monte-carlo-estimator" class="build">
 
 <p>Let \(x_1, \dots, x_n\) be independent and identitically distributed (i.i.d.) draws from \(X\).</p>
 
@@ -274,7 +274,7 @@ h(x) = \mathbb{I}(a, b) = \begin{cases}
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Conclusion</h2></hgroup><article  id="conclusion">
 
-</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  class="build" id="conclusion-1">
+</article></slide><slide class=""><hgroup><h2>Conclusion</h2></hgroup><article  id="conclusion-1" class="build">
 
 <p>We’ve seen…</p>
 
