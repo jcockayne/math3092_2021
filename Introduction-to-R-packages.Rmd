@@ -1,0 +1,225 @@
+---
+title: "Introduction to R packages"
+output: 
+  ioslides_presentation:
+    widescreen: true
+    incremental: false
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+## This Lecture
+
+1. What is an `R` package, and why should you write your own?
+2. A quick demo using an application of Monte Carlo methods.
+
+Where to find these slides: [github.com/jcockayne/math3092_2021](https://github.com/jcockayne/math3092_2021).
+
+Further reading: "R packages" by Hadley Wickham and Jenny Bryan, available at [r-pkgs.org](https://r-pkgs.org/).
+
+## `R` packages
+
+`R` packages are collections of code, documentation and data
+written by other `R` users.
+
+The main source of `R` packages is CRAN (the Comprehensive R Archive Network).
+
+As of October 2021, more than 18000 packages are available on CRAN!
+
+One of the main advantages of `R` is the fact that
+so many add on packages are available.
+
+
+## Using `R` packages
+
+If a package is available on CRAN, you can install and use it easily:
+
+```{r, eval = FALSE}
+install.packages("fortunes")
+```
+```{r, echo = FALSE}
+set.seed(3)
+```
+
+```{r}
+library(fortunes)
+fortune("statistics")
+```
+ 
+## `R` packages on Github
+
+There are many other packages which are stored on Github:
+it is also easy to install and use these,
+although there are no quality checks enforced for
+packages on Github.
+
+```{r, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("Gibbsdavidl/CatterPlots")
+```
+```{r, results = "hide"}
+library(CatterPlots)
+```
+
+```{r, results = "hide", eval = FALSE}
+n <- 50
+x <- runif(n)
+y <- x + rnorm(n, sd = 0.5)
+
+catplot(x, y)
+```
+
+## `R` packages on Github
+
+```{r, results = "hide", echo = FALSE, fig.width = 5, fig.height = 5}
+n <- 50
+x <- runif(n)
+y <- x + rnorm(n, sd = 0.5)
+
+catplot(x, y)
+```
+
+## A birthday problem
+
+Suppose that there are 30 people in a room.
+What is the chance that at least two of them share the same birthday?
+
+## A Monte Carlo approach
+
+We can simulate 
+
+```{r}
+birthdays <- sample(1:365, 30, replace = TRUE)
+table(birthdays)
+any(table(birthdays) > 1)
+```
+
+## A Monte Carlo approach
+
+Now repeat that simulation lots of times
+
+```{r}
+n_sim <- 10000
+
+matches <- replicate(n_sim, {
+    birthdays <- sample(1:365, 30, replace = TRUE)
+    table(birthdays)
+    any(table(birthdays) > 1)
+})
+
+mean(matches)
+```
+
+## A(nother) birthday problem
+
+
+Suppose that there are 23 people in a room.
+What is the chance that at least two of them share the same birthday?
+
+
+## Copy, paste and edit
+
+Edit our code from before:
+
+```{r}
+n_sim <- 100000
+
+matches <- replicate(n_sim, {
+    birthdays <- sample(1:365, 23, replace = TRUE)
+    table(birthdays)
+    any(table(birthdays) > 1)
+})
+
+mean(matches)
+```
+
+## Or... put it in a function
+
+```{r}
+approx_birthday_match_prob <- function(n_people, n_sim = 100000) {
+    matches <- replicate(n_sim, {
+        birthdays <- sample(1:365, n_people, replace = TRUE)
+        table(birthdays)
+        any(table(birthdays) > 1)
+    })
+    mean(matches)
+}
+
+approx_birthday_match_prob(30)
+approx_birthday_match_prob(23)
+```
+
+## Exact calculation
+
+```{r}
+birthday_match_prob <- function(n_people) {
+    if(n_people >= 365) {
+        prob_no_match <- 0
+    } else {
+        components <- 1 - ((1:n_people) - 1) / 365
+        prob_no_match <- prod(components)
+    }
+    1 - prob_no_match
+}
+
+birthday_match_prob(30)
+birthday_match_prob(23)
+```
+
+## Put it in a package
+
+Let's make an `R` package, called `birthdayproblem` to 
+share our `R` code with others.
+
+The `devtools` package contains lots of helpful tools
+for creating your own `R` package
+```{r, eval = FALSE}
+library(devtools)
+```
+
+To get started, we use
+```{r, eval = FALSE}
+create_package("birthdayproblem")
+```
+This gives us the basic structure of a package, without
+any `R` code yet.
+
+
+## Next steps
+
+1. [Set up with git](https://r-pkgs.org/git.html): `use_git()` (then commit changes after each step).
+1. [Add our `R` code](https://r-pkgs.org/r.html) in the `R` directory. Load the code with `load_all()` and try it!
+1. [Write some documentation](https://r-pkgs.org/man.html) and examples. Convert into the correct
+format with `document()`, then take a look at the new help files
+with `help()`.
+1. [Write the `DESCRIPTION` file](https://r-pkgs.org/description.html), which contains some basic information about your package.
+1. [Create a Github repository for your package](https://r-pkgs.org/git.html), and connect to your local version 
+1. [Write a README](https://r-pkgs.org/release.html#readme-rmd) (in R markdown format) with `use_readme_rmd()`.
+
+## The `birthdayproblem` package
+
+You can see the package at
+https://github.com/heogden/birthdayproblem
+
+This Github site includes both:
+
+1. a simple website for the package,
+with basic installation and usage instructions
+1. all the code for the package, so that others can modify it.
+
+
+## Conclusion
+
+
+Writing an `R` package is a great way to make
+your work easy to use by other people (or even your future self).
+
+
+There are many other topics we have not covered here,
+which are important if you are writing a more complex package.
+
+Take a look at the book "R packages" by Hadley Wickham and Jenny Bryan, available at [r-pkgs.org](https://r-pkgs.org/).
+
+The best way to learn how to write an `R` package is to try it!
