@@ -1,0 +1,48 @@
+---
+title: "Week 2 Exercise"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Gaussians
+
+```{r sampling_graph}
+  library(ggplot2)
+  set.seed(123)
+  n = 10000
+  t = -3
+  h <- function(x) {
+    x < t
+  }
+  x_sample = rnorm(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample)
+  df = data.frame(n=1:n, h_bar_n=h_bar_n)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_hline(yintercept=pnorm(t), linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```
+
+## Cauchys
+
+```{r cauchy_graph}
+  library(ggplot2)
+  set.seed(123)
+  n = 10000
+  t = -1
+  h <- function(x) {
+    x < t
+  }
+  x_sample = rcauchy(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample)
+  df = data.frame(n=1:n, h_bar_n=h_bar_n)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_hline(yintercept=pcauchy(t), linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```

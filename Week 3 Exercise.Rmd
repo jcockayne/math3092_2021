@@ -1,0 +1,181 @@
+---
+title: "Week 3 Exercise"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercise 3.4(a)
+
+We need to compute the integral \mathbb{E}_f(h(X)), where $X \sim \mathcal{N}(0, 1)$ and
+$$
+h(x) = \exp\left( 
+  -\frac{(x-3)^2}{2}
+\right)
++
+\exp\left( 
+  -\frac{(x-6)^2}{2}
+\right).
+$$
+Remember that the PDF of a standard normal is given by
+$$
+f(x) = \frac{1}{\sqrt{2\pi}}\exp\left( 
+  -\frac{x^2}{2}
+\right).
+$$
+It will be helpful to abbreviate these kinds of integrals.
+Introduce the notation
+$$
+q(x; \mu, \sigma^2) = \exp\left( 
+  -\frac{(x-\mu)^2}{2\sigma^2}
+\right).
+$$
+It will be helpful later to notice that this is proportional to the PDF of a Gaussian
+random variable with mean $\mu$ and variance $\sigma^2$.
+So $f(x) = \frac{1}{\sqrt{2 \pi}} N(x; 0, 1)$ and $h(x) = N(x; 3, 1) + N(x; 6, 1)$.
+
+Now we have that
+$$\begin{aligned}
+\mathbb{E}_f(h(X)) &= \int_{-\infty}^\infty h(x) f(x) dx \\
+&= \frac{1}{\sqrt{2 \pi}}\int_{-\infty}^\infty [N(x; 3, 1) + N(x; 6, 1)] N(x; 0, 1) dx .
+\end{aligned}$$
+It looks like rearranging terms of the form $N(x; \mu, 1) N(x; 0,1)$ will be helpful, so
+let's take a closer look at those.
+
+$$\begin{aligned}
+q(x; \mu, 1) q(x; 0, 1) &= \exp\left(
+  -\frac{(x - \mu)^2}{2}
+\right)
+\exp\left(
+  -\frac{x^2}{2}
+\right) \\
+&= \exp\left(
+  -\frac{1}{2}(x^2 - 2\mu x + \mu^2 + x^2)
+\right) \\
+&= \exp\left(
+  -\frac{1}{2}(2x^2 - 2\mu x + \mu^2)
+\right) \\
+&= \exp\left(
+  -x^2 - \mu x + \frac{1}{2}\mu^2
+\right) \\
+&= \exp\left(
+  -\left(x^2 - \frac{1}{2} \mu\right)^2 + \frac{\mu^2}{4}
+\right) \\
+&= \exp\left(
+  -\left(x^2 - \frac{1}{2} \mu\right)^2
+\right)
+\exp\left(
+-\frac{\mu^2}{4}
+\right)\\
+&= q\left(x; \frac{1}{2}\mu, \frac{1}{2}\right) \exp\left( -\frac{\mu^2}{4}\right)
+\end{aligned}$$
+
+Now let's think about integrating this
+$$\begin{aligned}
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty q(x; \mu, 1) q(x; 0, 1) dx 
+&= \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{\mu^2}{4}\right) 
+  \int_{-\infty}^\infty q\left(x; \frac{1}{2}\mu, \frac{1}{2}\right) dx
+\end{aligned}$$
+The integral on the right above is easy, because we know $q(x; \frac{1}{2}\mu, 2)$ is
+proportional to the PDF of a Gaussian with mean $\frac{1}{2}\mu$ and variance $2$.
+Moreover, we know that such PDFs integrate to 1, precisely because they are PDFs.
+If we look at the Gaussian PDF, we see that
+$$\begin{aligned}
+  N(x; \mu, \sigma^2) &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(
+    -\frac{(x-\mu)^2}{2\sigma^2}
+  \right) \\
+  &= \frac{1}{\sqrt{2\pi\sigma^2}}q(x; \mu, \sigma^2)
+\end{aligned}$$
+Since the left-hand-side integrates to 1, we must have that
+$$
+\int_{-\infty}^\infty q(x; \mu, \sigma^2) dx = \sqrt{2\pi\sigma^2}.
+$$
+Therefore
+$$\begin{aligned}
+\frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty q(x; \mu, 1) q(x; 0, 1) dx
+&= \frac{\sqrt{\pi}}{\sqrt{2\pi}}\exp\left(-\frac{\mu^2}{4}\right) \\
+&=\frac{1}{\sqrt{2}}\exp\left(-\frac{\mu^2}{4}\right)
+\end{aligned}$$
+So that
+$$
+E_f[h(X)] = \frac{1}{\sqrt{2}}\left[
+  \exp\left(-\frac{9}{4}\right) + \exp\left(-\frac{36}{4}\right)
+\right]
+$$
+
+# Exercise 3.4(b)
+```{r sampling_graph}
+  library(ggplot2)
+  set.seed(123)
+  n = 10000
+  h <- function(x) {
+    exp(-0.5*(x-3)^2) + exp(-0.5*(x-6)^2)
+  }
+  truth = 1/sqrt(2)*(exp(-9/4) + exp(-36/4))
+  
+  x_sample = rnorm(n)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample)
+  df = data.frame(n=1:n, h_bar_n=h_bar_n)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_hline(yintercept=truth, linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```
+
+# Exercise 3.4(c)
+```{r sampling_graph_nonconvergent}
+  library(ggplot2)
+  set.seed(123)
+  n = 10000
+  h <- function(x) {
+    exp(-0.5*(x-3)^2) + exp(-0.5*(x-6)^2)
+  }
+  truth = 1/sqrt(2)*(exp(-9/4) + exp(-36/4))
+  
+  x_sample = runif(n, -8,-1)
+  f <- function(x) {
+    1/sqrt(2*pi) * exp(-0.5*x^2)
+  }
+  g <- function(x) {
+    1/7
+  }
+  weights = f(x_sample) / g(x_sample)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample*weights)
+  df = data.frame(n=1:n, h_bar_n=h_bar_n)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_hline(yintercept=truth, linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```
+
+# Exercise 3.5
+```{r sampling_graph_3.5}
+  library(ggplot2)
+  set.seed(123)
+  n = 10000
+  lambda= 1
+  h <- function(x) {
+    exp(-0.5*(x-3)^2) + exp(-0.5*(x-6)^2)
+  }
+  truth = 1/sqrt(2)*(exp(-9/4) + exp(-36/4))
+  
+  x_sample = rexp(n, lambda)
+  f <- function(x) {
+    1/sqrt(2*pi) * exp(-0.5*x^2)
+  }
+  g <- function(x) {
+    lambda*exp(-lambda*x)
+  }
+  weights = f(x_sample) / g(x_sample)
+  h_sample = h(x_sample)
+  h_bar_n = 1/1:n * cumsum(h_sample*weights)
+  df = data.frame(n=1:n, h_bar_n=h_bar_n)
+  ggplot(data=df, aes(x=n, y=h_bar_n, group=1)) +
+    geom_line(color="red") +
+    geom_hline(yintercept=truth, linetype="dashed", color="blue") +
+    ylab(expression(bar(h)[n]))
+```
